@@ -8,7 +8,7 @@ public class InventoryItemView : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D boxCollider2D;
     [SerializeField] private Image image;
-    [SerializeField] private GridObjectColliderComponent gridObjectColliderIntoSlot;
+    [SerializeField] public GridObjectColliderComponent GridObjectColliderIntoSlot { get; private set; }
     [field: SerializeField] public List<GridObjectColliderComponent> GridObjectCollidersOnSlot { get; private set; } = new();
     public RectTransform GridObjectParent { get; private set; }
 
@@ -30,11 +30,11 @@ public class InventoryItemView : MonoBehaviour
         {
             GridObjectCollidersOnSlot.Add(gridObjectColliderComponent);
             
-            if(gridObjectColliderIntoSlot == null) 
+            if(GridObjectColliderIntoSlot == null) 
                 result = true;
         }
 
-        if (gridObjectColliderIntoSlot == null)
+        if (GridObjectColliderIntoSlot == null)
         {
             image.color = Color.green;
 
@@ -61,11 +61,11 @@ public class InventoryItemView : MonoBehaviour
                 GridObjectCollidersOnSlot[0].OnEnterSlot(this);
         }
 
-        if(GridObjectCollidersOnSlot.Count > 0 && gridObjectColliderIntoSlot != null)
+        if(GridObjectCollidersOnSlot.Count > 0 && GridObjectColliderIntoSlot != null)
         {
             image.color = Color.red;
         }
-        else if(gridObjectColliderIntoSlot != null)
+        else if(GridObjectColliderIntoSlot != null)
         {
             image.color = Color.yellow;
         }
@@ -78,7 +78,7 @@ public class InventoryItemView : MonoBehaviour
 
     public void OnItemDropIntoSlot(GridObjectColliderComponent gridObjectColliderComponent)
     {
-        gridObjectColliderIntoSlot = gridObjectColliderComponent;
+        GridObjectColliderIntoSlot = gridObjectColliderComponent;
 
         if (GridObjectCollidersOnSlot.Contains(gridObjectColliderComponent))
             GridObjectCollidersOnSlot.Remove(gridObjectColliderComponent);
@@ -88,12 +88,12 @@ public class InventoryItemView : MonoBehaviour
 
     public void OnItemTakeFromSlot(GridObjectColliderComponent gridObjectColliderComponent)
     {
-        if (gridObjectColliderIntoSlot == gridObjectColliderComponent)
+        if (GridObjectColliderIntoSlot == gridObjectColliderComponent)
         {
             if (!GridObjectCollidersOnSlot.Contains(gridObjectColliderComponent))
                 GridObjectCollidersOnSlot.Add(gridObjectColliderComponent);
 
-            gridObjectColliderIntoSlot = null;
+            GridObjectColliderIntoSlot = null;
         }
     }
 }

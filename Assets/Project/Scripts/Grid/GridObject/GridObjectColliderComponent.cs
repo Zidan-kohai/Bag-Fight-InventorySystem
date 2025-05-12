@@ -32,6 +32,9 @@ namespace Scripts.Grid.GridObject
         {
             Debug.Log(name + " " + inventoryItemView.name + " OnEnterSlot");
 
+            if (inventoryItemView.GridObjectColliderIntoSlot != null)
+                return;
+
             if (inventoryItemView.GridObjectCollidersOnSlot.Any(x => gridsOtherCollider.Contains(x)))
             {
                 Debug.Log("the inventory has other collider of this object");
